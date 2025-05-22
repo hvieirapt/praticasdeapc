@@ -1,17 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt">
 <head>
-    <title>DEAPC - Plataforma Logística - Inventario</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/styles.css">
+    <title>Dashboard</title></title>
 </head>
-
 <body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="inventario.html" class="current">Inventário</a></li>
+                <li><a href="expedicoes.html">Expedições</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
     <h1>Inventario</h1>
     <table border="1">
         <tr>
             <td><img src="images/paletes.jpg" alt="paletes"></td>
-            <td><center>Consultar stock</center></td>
+            <td><center><a href="consultainventario.html">Consultar stock</a></center></td>
         </tr>
         <tr>
             <td><img src="images/inventario.jpg" alt="inventario"</td>
-            <td><center>Alterar inventario</center></td>
+            <td><center><a href="alterainventario.html">Alterar inventario</a></center></td>
         </tr>
     </table>
+    </main>
 </body>
+</html>
