@@ -4,6 +4,12 @@ body {
     padding: 10;
 }
 
+.current {
+  text-decoration-line: underline;
+  text-decoration-thickness: 2px;
+  text-decoration-color: #007bff;
+}
+
 /* Seletores individuais e combinados. Os parágrafos têm espaçamento entre linhas */
 p {
     line-height: 1.5; /* Space between lines */
@@ -67,10 +73,43 @@ nav ul li a:hover {
     text-decoration: none; /* Remove sublinhado do efeito hover */
 }
 
+/* Indicador de página selecionada e hover */
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav ul li a.current {
+    text-decoration: underline;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
 main {
     padding: 20px; /* Espaçamento interno do main */
 }
 
 h1 {
     color: #333; /* Cor do texto para cabeçalhos de nível 1 */
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+}
+.back-button {
+    display: inline-block;
+    margin: 10px;
+    font-size: 24px;
+    text-decoration: none;
+    color: black;
 }
