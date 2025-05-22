@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/styles.css">
+    <title>Dashboard</title>
+    </title>
+</head>
+
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="inventario.html">Inventário</a></li>
+                <li><a href="expedicoes.html">Expedições</a></li>
+                <li><a href="dashboard.html" class="current">Dashboard</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+
+        <section class="kpis">
+            <div class="kpi-card">📦 Inventário Atual<br><strong>1235 unidades</strong></div>
+            <div class="kpi-card">🚚 Expedições Pendentes<br><strong>17</strong></div>
+            <div class="kpi-card">✅ Entregas Hoje<br><strong>25</strong></div>
+            <div class="kpi-card">⚠️ Stock Crítico<br><strong>3 produtos</strong></div>
+        </section>
+
+        <section class="main-content">
+            <div class="chart-section">
+                <h2>Movimentação de Stock (Últimos 7 dias)</h2>
+                <div class="chart-placeholder">[ Gráfico de barras aqui ]</div>
+            </div>
+
+            <div class="tables">
+                <div class="table-container">
+                    <h3>📋 Últimas Encomendas</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Cliente</th>
+                                <th>Data</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>101</td>
+                                <td>Empresa A</td>
+                                <td>21/05</td>
+                                <td>Pendente</td>
+                            </tr>
+                            <tr>
+                                <td>102</td>
+                                <td>Empresa B</td>
+                                <td>21/05</td>
+                                <td>Expedida</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="table-container">
+                    <h3>⚠️ Produtos com Stock Crítico</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Produto</th>
+                                <th>Quantidade</th>
+                                <th>Armazém</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Caixas Térmicas</td>
+                                <td>3</td>
+                                <td>Armazém Norte</td>
+                            </tr>
+                            <tr>
+                                <td>Paletes Euro</td>
+                                <td>1</td>
+                                <td>Armazém Sul</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="actions">
+            <h2>Ações Rápidas</h2>
+            <button>➕ Nova Encomenda</button>
+            <button>📦 Novo Produto</button>
+            <button>🚛 Nova Entrega</button>
+            <button>📤 Exportar Relatório</button>
+        </section>
+
+        <footer class="footer">
+            <p>© 2025 Projeto de Gestão Logística Realizados por: Guilherme Moreira, Hugo Vieira, Sérgio Almeida – ISEP
+            </p>
+            <!-- logo isep -->
+        </footer>
+
+</body>
+</main>
+</body>
+
+</html>
