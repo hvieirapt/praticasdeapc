@@ -1,7 +1,7 @@
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Changed to a more elegant font */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
-    padding: 10;
+    padding: 0;
 }
 
 .current {
@@ -10,70 +10,63 @@ body {
   text-decoration-color: #007bff;
 }
 
-/* Seletores individuais e combinados. Os parágrafos têm espaçamento entre linhas */
 p {
-    line-height: 1.5; /* Space between lines */
+    line-height: 1.5;
 }
 
-/* Seletores combinados para cabeçalho e parágrafo */
 h1, p {
-    color: #333; /* Common text color */
+    color: #333;
 }
 
-/* Selector de classe para texto destacado */
 .highlight {
-    background-color: yellow; /* Highlight effect */
+    background-color: yellow;
 }
 
-/* Pseudo-classe para links com efeito ao passar o mouse */
 a:hover {
-    text-decoration: underline; /* Underline on hover */
+    text-decoration: underline;
 }
 
-/* Pseudo-elemento para a primeira letra do parágrafo */
 p::first-letter {
-    font-size: 2em; /* Increase the size of the first letter */
-    font-weight: bold; /* Make it bold */
+    font-size: 2em;
+    font-weight: bold;
 }
 
 header {
-    background-color: #4CAF50; /* Cor de fundo do cabeçalho */
-    padding: 10px 20px; /* Espaçamento interno do cabeçalho */
+    background-color: #4CAF50;
+    padding: 10px 20px;
 }
 
 nav ul {
-    list-style-type: none; /* Remove estilo de lista padrão */
-    margin: 0; /* Remove margem */
-    padding: 0; /* Remove padding */
-    text-align: center; /* Alinha o conteúdo no centro */
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
 }
 
 nav ul li {
-    display: inline-block; /* Permite itens na mesma linha */
-    margin-right: 15px; /* Espaçamento entre os itens da lista */
+    display: inline-block;
+    margin-right: 15px;
 }
 
 nav ul li a {
-    color: white; /* Cor do texto dos links */
-    text-decoration: none; /* Remove o sublinhado dos links */
-    font-weight: bold; /* Estilo de fonte em negrito */
-    padding: 10px; /* Adiciona espaçamento aos links */
-    font-size: 16px; /* Tamanho da fonte dos links */
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px;
+    font-size: 16px;
 }
 
 table th, table td {
-    padding: 10px; /* Adiciona padding de 10px em cada célula da tabela */
+    padding: 10px;
 }
 
 nav ul li a.current, table th, table td {
-    text-decoration: none; /* Remove sublinhado do efeito hover */
+    text-decoration: none;
 }
 
 nav ul li a:hover {
-    text-decoration: none; /* Remove sublinhado do efeito hover */
+    text-decoration: none;
 }
-
-/* Indicador de página selecionada e hover */
 
 nav ul li a {
     color: white;
@@ -90,26 +83,67 @@ nav ul li a:hover {
 }
 
 main {
-    padding: 20px; /* Espaçamento interno do main */
+    padding: 20px;
 }
 
 h1 {
-    color: #333; /* Cor do texto para cabeçalhos de nível 1 */
+    color: #333;
 }
 
 table {
     border-collapse: collapse;
     width: 100%;
 }
+
 th, td {
     border: 1px solid black;
     padding: 8px;
     text-align: center;
 }
+
 .back-button {
     display: inline-block;
     margin: 10px;
     font-size: 24px;
     text-decoration: none;
     color: black;
+}
+
+/* Responsive styles */
+@media screen and (max-width: 768px) {
+    nav ul li {
+        display: block;
+        margin: 5px 0;
+    }
+
+    table {
+        font-size: 12px;
+    }
+
+    th, td {
+        padding: 4px;
+    }
+
+    .back-button {
+        font-size: 18px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    nav ul li {
+        display: block;
+        margin: 5px 0;
+    }
+
+    table {
+        font-size: 10px;
+    }
+
+    th, td {
+        padding: 2px;
+    }
+
+    .back-button {
+        font-size: 14px;
+    }
 }
