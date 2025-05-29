@@ -3,6 +3,7 @@ set -e
 
 # ─── Garantir que /var/www/html e /var/www/html/data existem e têm permissão 777 ───
 # (isto corre assim que o container arranca, imediatamente após o build)
+su root
 chmod -R 0777 /var/www/html
 chmod -R 0777 /var/www/html/data
 
