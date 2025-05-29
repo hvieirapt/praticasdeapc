@@ -1,30 +1,12 @@
 #!/bin/bash
 set -e
 
-# ─── Build-time em entrypoint (na primeira execução do container) ────────────
-
-# Lista de todos os paths que queres garantir
-DIRS=(
-  /var/www/html/hugo/cgi-bin
-  /var/www/html/hugo/public_html
-  /var/www/html/sergio/cgi-bin
-  /var/www/html/sergio/public_html
-  /var/www/html/guilherme/cgi-bin
-  /var/www/html/guilherme/public_html
-  /var/www/html/data
-  /var/www/html/scripts
-)
-
-# Cria e ajusta permissões
-for d in "${DIRS[@]}"; do
-  if [ ! -d "$d" ]; then
-    mkdir -p "$d"
-  fi
-  chmod -R 0777 "$d"
-done
+# ─── Garantir que /var/www/html e /var/www/html/data existem e têm permissão 777 ───
+# (isto corre assim que o container arranca, imediatamente após o build)
+chmod -R 0777 /var/www/html
+chmod -R 0777 /var/www/html/data
 
 # ─── Inicialização do SQLite ────────────────────────────────────────────────
-
 DB_DIR=/var/www/html/data
 DB_FILE=$DB_DIR/database.sqlite
 
