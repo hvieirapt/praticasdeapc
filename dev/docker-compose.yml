@@ -1,0 +1,10 @@
+services:
+  web:
+    build: .
+    image: php-multi-cgi-hardcode
+    container_name: webapp
+    ports:
+      - "8080:80"
+    volumes:
+      - ../app:/var/www/html
+    restart: unless-stopped

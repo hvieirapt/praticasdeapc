@@ -1,0 +1,28 @@
+FROM php:8.1-apache
+
+# Habilita o CGI (mod_php e PHP-CLI)
+RUN a2enmod cgi \
+&& rm -rf /var/lib/apt/lists/*
+
+# 2. Configura o Apache para tratar /var/www/html/scripts e /*/cgi-bin como CGI
+RUN printf '\
+<Directory /var/www/html/scripts>\n\
+  Options +ExecCGI\n\
+  SetHandler cgi-script\n\
+</Directory>\n\
+<Directory /var/www/html/*/cgi-bin>\n\
+  Options +ExecCGI\n\
+  SetHandler cgi-script\n\
+</Directory>\n' \
+  > /etc/apache2/conf-available/cgi-multi.conf \
+ && a2enconf cgi-multi.conf  # ativa CGI para scripts e cgi-bin :contentReference[oaicite:0]{index=0}
+
+WORKDIR /var/www/html
+EXPOSE 80
+
+# 3. No arranque, cria estático os dirs e ajusta permissões antes de subir o Apache
+CMD \
+  mkdir -p /var/www/html/hugo/cgi-bin  /var/www/html/sergio/cgi-bin  /var/www/html/guilherme/cgi-bin  /var/www/html/scripts && \
+  chmod 755 /var/www/html/hugo/cgi-bin  /var/www/html/sergio/cgi-bin  /var/www/html/guilherme/cgi-bin  /var/www/html/scripts && \
+  chmod -R 777 hugo sergio guilherme scripts && \
+  exec apache2-foreground
