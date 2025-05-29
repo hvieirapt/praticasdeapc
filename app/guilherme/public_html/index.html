@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Gestão Logística</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/login.css">
+</head>
+
+<body>
+
+    <div class="login-container">
+        <h2>Iniciar Sessão</h2>
+        <form action="scripts/login.php" method="POST">
+            <label for="username">Utilizador:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Palavra-passe:</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit">Entrar</button>
+        </form>
+        <p class="footer-text">© 2025 Projeto de Gestão Logística – ISEP</p>
+    </div>
+
+</body>
+
+</html>
