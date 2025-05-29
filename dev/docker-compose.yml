@@ -1,10 +1,13 @@
+version: '3.8'
 services:
   web:
     build: .
-    image: php-multi-cgi-hardcode
+    image: php-multi-cgi-sqlite
     container_name: webapp
     ports:
       - "8080:80"
     volumes:
       - ../app:/var/www/html
+      # SQLite
+      - ../app/data:/var/www/html/data
     restart: unless-stopped

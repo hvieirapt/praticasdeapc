@@ -1,7 +1,11 @@
 FROM php:8.1-apache
 
-# Ativar os módulos CGI e rewrite
-RUN a2enmod cgi rewrite && rm -rf /var/lib/apt/lists/*
+# Instalar dependências do SQLite e extensão PDO_SQLITE
+RUN apt-get update \
+ && apt-get install -y sqlite3 libsqlite3-dev \
+ && docker-php-ext-install pdo pdo_sqlite \
+ && a2enmod cgi rewrite \
+ && rm -rf /var/lib/apt/lists/*
 
 # Configurar CGI para /scripts e /*/cgi-bin
 RUN printf '\
@@ -14,7 +18,7 @@ RUN printf '\
   SetHandler cgi-script\n\
 </Directory>\n' \
   > /etc/apache2/conf-available/cgi-multi.conf \
-  && a2enconf cgi-multi.conf
+ && a2enconf cgi-multi.conf
 
 # Criar aliases para ocultar 'public_html' da URL
 RUN printf '\
@@ -28,17 +32,14 @@ Alias /guilherme/ /var/www/html/guilherme/public_html/\n\
   Require all granted\n\
 </Directory>\n' \
   > /etc/apache2/conf-available/userdir-alias.conf \
-  && a2enconf userdir-alias.conf
+ && a2enconf userdir-alias.conf
 
-# Diretório de trabalho e porta
 WORKDIR /var/www/html
 EXPOSE 80
 
-# Criação das pastas necessárias e permissões
-CMD mkdir -p \
-      /var/www/html/hugo/cgi-bin /var/www/html/hugo/public_html \
-      /var/www/html/sergio/cgi-bin /var/www/html/sergio/public_html \
-      /var/www/html/guilherme/cgi-bin /var/www/html/guilherme/public_html \
-      /var/www/html/scripts && \
-    chmod -R 777 /var/www/html/hugo /var/www/html/sergio /var/www/html/guilherme /var/www/html/scripts && \
-    exec apache2-foreground
+# Copia o script de entrypoint e dá permissão
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+ENTRYPOINT ["docker-entrypoint.sh"]
+CMD ["apache2-foreground"]
