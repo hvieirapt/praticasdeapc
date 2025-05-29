@@ -1,10 +1,9 @@
 FROM php:8.1-apache
 
-# Habilita o CGI (mod_php e PHP-CLI)
-RUN a2enmod cgi \
-&& rm -rf /var/lib/apt/lists/*
+# Ativar os módulos CGI e rewrite
+RUN a2enmod cgi rewrite && rm -rf /var/lib/apt/lists/*
 
-# 2. Configura o Apache para tratar /var/www/html/scripts e /*/cgi-bin como CGI
+# Configurar CGI para /scripts e /*/cgi-bin
 RUN printf '\
 <Directory /var/www/html/scripts>\n\
   Options +ExecCGI\n\
@@ -15,14 +14,31 @@ RUN printf '\
   SetHandler cgi-script\n\
 </Directory>\n' \
   > /etc/apache2/conf-available/cgi-multi.conf \
- && a2enconf cgi-multi.conf  # ativa CGI para scripts e cgi-bin :contentReference[oaicite:0]{index=0}
+  && a2enconf cgi-multi.conf
 
+# Criar aliases para ocultar 'public_html' da URL
+RUN printf '\
+Alias /hugo/ /var/www/html/hugo/public_html/\n\
+Alias /sergio/ /var/www/html/sergio/public_html/\n\
+Alias /guilherme/ /var/www/html/guilherme/public_html/\n\
+\n\
+<Directory /var/www/html/*/public_html>\n\
+  Options Indexes FollowSymLinks\n\
+  AllowOverride All\n\
+  Require all granted\n\
+</Directory>\n' \
+  > /etc/apache2/conf-available/userdir-alias.conf \
+  && a2enconf userdir-alias.conf
+
+# Diretório de trabalho e porta
 WORKDIR /var/www/html
 EXPOSE 80
 
-# 3. No arranque, cria estático os dirs e ajusta permissões antes de subir o Apache
-CMD \
-  mkdir -p /var/www/html/hugo/cgi-bin  /var/www/html/sergio/cgi-bin  /var/www/html/guilherme/cgi-bin  /var/www/html/scripts && \
-  chmod 755 /var/www/html/hugo/cgi-bin  /var/www/html/sergio/cgi-bin  /var/www/html/guilherme/cgi-bin  /var/www/html/scripts && \
-  chmod -R 777 hugo sergio guilherme scripts && \
-  exec apache2-foreground
+# Criação das pastas necessárias e permissões
+CMD mkdir -p \
+      /var/www/html/hugo/cgi-bin /var/www/html/hugo/public_html \
+      /var/www/html/sergio/cgi-bin /var/www/html/sergio/public_html \
+      /var/www/html/guilherme/cgi-bin /var/www/html/guilherme/public_html \
+      /var/www/html/scripts && \
+    chmod -R 777 /var/www/html/hugo /var/www/html/sergio /var/www/html/guilherme /var/www/html/scripts && \
+    exec apache2-foreground
