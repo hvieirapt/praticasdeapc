@@ -18,4 +18,5 @@
 - Formulário `editForm` para editar/aprovar/apagar expedição.
 - Campos obrigatórios: `cliente`, `morada`, `data_entrega`, `estado`.
 
-As validações de preenchimento são agora garantidas por funções em `validate.js`, executadas apenas no browser.
+
+As validações de preenchimento são agora garantidas por funções em `validate.js`, executadas apenas no browser. Os campos obrigatórios são destacados a vermelho quando deixados em branco ou com valores inválidos e surgem mensagens de aviso para auxiliar o utilizador.

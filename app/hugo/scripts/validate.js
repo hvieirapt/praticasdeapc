@@ -1,30 +1,100 @@
 // Simple client-side logic for forms and modals
 
+
+// Exibe aviso simples
 function showAlert(msg) {
   alert(msg);
 }
 
-function validateLogin(form) {
-  if (!form.username.value.trim() || !form.password.value.trim()) {
-    showAlert('Preencha utilizador e palavra-passe.');
-    return false;
+// Aplica ou remove destaque visual no campo
+function highlightField(field, error) {
+  if (error) {
+    field.classList.add('border-red-500', 'bg-red-100');
+  } else {
+    field.classList.remove('border-red-500', 'bg-red-100');
   }
-  return true;
+}
+
+function validateLogin(form) {
+  let valid = true;
+  const u = form.username;
+  const p = form.password;
+
+  if (!u.value.trim()) {
+    highlightField(u, true);
+    valid = false;
+  } else if (u.value.trim().length < 3) {
+    highlightField(u, true);
+    showAlert('Utilizador deve ter pelo menos 3 caracteres.');
+    valid = false;
+  } else {
+    highlightField(u, false);
+  }
+
+  if (!p.value.trim()) {
+    highlightField(p, true);
+    valid = false;
+  } else if (p.value.trim().length < 4) {
+    highlightField(p, true);
+    showAlert('Palavra-passe deve ter pelo menos 4 caracteres.');
+    valid = false;
+  } else {
+    highlightField(p, false);
+  }
+
+  if (!valid) {
+    showAlert('Preencha corretamente os campos destacados.');
+  }
+  return valid;
 }
 
 function validateExpedicao(form) {
-  const cliente = form.cliente.value.trim();
-  const morada = form.morada.value.trim();
-  const dataEnt = form.data_entrega.value;
-  if (!cliente || !morada || !dataEnt) {
-    showAlert('Preencha todos os campos.');
-    return false;
+  let valid = true;
+  const c = form.cliente;
+  const m = form.morada;
+  const d = form.data_entrega;
+
+  if (!c.value.trim()) {
+    highlightField(c, true);
+    valid = false;
+  } else {
+    highlightField(c, false);
   }
-  if (form.estado && !form.estado.value.trim()) {
-    showAlert('Indique o estado.');
-    return false;
+
+  if (!m.value.trim()) {
+    highlightField(m, true);
+    valid = false;
+  } else {
+    highlightField(m, false);
   }
-  return true;
+
+  const dataEnt = d.value;
+  const today = new Date().toISOString().split('T')[0];
+  if (!dataEnt) {
+    highlightField(d, true);
+    valid = false;
+  } else if (dataEnt < today) {
+    highlightField(d, true);
+    showAlert('Data de entrega não pode ser no passado.');
+    valid = false;
+  } else {
+    highlightField(d, false);
+  }
+
+  if (form.estado) {
+    const e = form.estado;
+    if (!e.value.trim()) {
+      highlightField(e, true);
+      valid = false;
+    } else {
+      highlightField(e, false);
+    }
+  }
+
+  if (!valid) {
+    showAlert('Preencha corretamente os campos destacados.');
+  }
+  return valid;
 }
 
 function initModals() {
