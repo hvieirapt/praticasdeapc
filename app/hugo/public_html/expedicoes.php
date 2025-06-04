@@ -35,15 +35,15 @@
           <input type="hidden" name="action" value="criar">
           <div class="flex flex-col">
             <label for="cliente" class="mb-1">Cliente:</label>
-            <input type="text" id="cliente" name="cliente" required class="border rounded p-2" />
+            <input type="text" id="cliente" name="cliente" required class="border border-gray-300 rounded p-2" />
           </div>
           <div class="flex flex-col">
             <label for="morada" class="mb-1">Morada:</label>
-            <input type="text" id="morada" name="morada" required class="border rounded p-2" />
+            <input type="text" id="morada" name="morada" required class="border border-gray-300 rounded p-2" />
           </div>
           <div class="flex flex-col">
             <label for="data_entrega" class="mb-1">Data de Entrega:</label>
-            <input type="date" id="data_entrega" name="data_entrega" required class="border rounded p-2" />
+            <input type="date" id="data_entrega" name="data_entrega" required class="border border-gray-300 rounded p-2" />
           </div>
           <div class="flex justify-end gap-2">
             <button type="button" id="closeCreate" class="px-4 py-2 bg-gray-300 rounded">Cancelar</button>
@@ -85,6 +85,8 @@
           <?php endif; ?>
         </tbody>
       </table>
+
+
     <div id="editModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
       <div class="bg-white p-6 rounded w-full max-w-md">
         <h2 class="text-lg font-semibold mb-4">Editar Expedição</h2>
@@ -92,19 +94,19 @@
           <input type="hidden" name="id" id="edit_id">
           <div class="flex flex-col">
             <label for="edit_cliente" class="mb-1">Cliente:</label>
-            <input type="text" id="edit_cliente" name="cliente" required class="border rounded p-2" />
+            <input type="text" id="edit_cliente" name="cliente" required class="border border-gray-300 rounded p-2" />
           </div>
           <div class="flex flex-col">
             <label for="edit_morada" class="mb-1">Morada:</label>
-            <input type="text" id="edit_morada" name="morada" required class="border rounded p-2" />
+            <input type="text" id="edit_morada" name="morada" required class="border border-gray-300 rounded p-2" />
           </div>
           <div class="flex flex-col">
             <label for="edit_entrega" class="mb-1">Data de Entrega:</label>
-            <input type="date" id="edit_entrega" name="data_entrega" required class="border rounded p-2" />
+            <input type="date" id="edit_entrega" name="data_entrega" required class="border border-gray-300 rounded p-2" />
           </div>
           <div class="flex flex-col">
             <label for="edit_estado" class="mb-1">Estado:</label>
-            <select id="edit_estado" name="estado" class="border rounded p-2">
+            <select id="edit_estado" name="estado" class="border border-gray-300 rounded p-2">
               <?php foreach ($estados as $op): ?>
                 <option value="<?= htmlspecialchars($op, ENT_QUOTES) ?>">
                   <?= htmlspecialchars($op) ?>

@@ -1,6 +1,5 @@
 // Simple client-side logic for forms and modals
 
-
 // Exibe aviso simples
 function showAlert(msg) {
   alert(msg);
@@ -9,9 +8,9 @@ function showAlert(msg) {
 // Aplica ou remove destaque visual no campo
 function highlightField(field, error) {
   if (error) {
-    field.classList.add('border-red-500', 'bg-red-100');
+    field.classList.add('border-red-500');
   } else {
-    field.classList.remove('border-red-500', 'bg-red-100');
+    field.classList.remove('border-red-500');
   }
 }
 
