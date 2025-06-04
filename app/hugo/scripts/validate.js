@@ -1,5 +1,6 @@
 // Simple client-side logic for forms and modals
 
+
 // Exibe aviso simples
 function showAlert(msg) {
   alert(msg);
