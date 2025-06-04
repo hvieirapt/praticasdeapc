@@ -76,11 +76,11 @@
                     Editar
                   </button>
                 </td>
-                <td class="px-4 py-2"><?= htmlspecialchars($exp['data_criacao'], ENT_QUOTES) ?></td>
-                <td class="px-4 py-2"><?= htmlspecialchars($exp['data_entrega'], ENT_QUOTES) ?></td>
-                <td class="px-4 py-2"><?= htmlspecialchars($exp['cliente'], ENT_QUOTES) ?></td>
-                <td class="px-4 py-2"><?= htmlspecialchars($exp['morada'], ENT_QUOTES) ?></td>
-                <td class="px-4 py-2"><?= htmlspecialchars($exp['estado'], ENT_QUOTES) ?></td>
+                <td class="px-4 py-2 text-center"><?= htmlspecialchars($exp['data_criacao'], ENT_QUOTES) ?></td>
+                <td class="px-4 py-2 text-center"><?= htmlspecialchars($exp['data_entrega'], ENT_QUOTES) ?></td>
+                <td class="px-4 py-2 text-center"><?= htmlspecialchars($exp['cliente'], ENT_QUOTES) ?></td>
+                <td class="px-4 py-2 text-center"><?= htmlspecialchars($exp['morada'], ENT_QUOTES) ?></td>
+                <td class="px-4 py-2 text-center"><?= htmlspecialchars($exp['estado'], ENT_QUOTES) ?></td>
               </tr>
             <?php endforeach; ?>
           <?php endif; ?>
