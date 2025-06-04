@@ -86,7 +86,6 @@
           <?php endif; ?>
         </tbody>
       </table>
-
     <div id="editModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
       <div class="bg-white p-6 rounded w-full max-w-md">
         <h2 class="text-lg font-semibold mb-4">Editar Expedição</h2>
