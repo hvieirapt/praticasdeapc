@@ -1,19 +1,19 @@
-// Form and modal handlers
+// Manipulação de formulários e modais
 
-function show(id) { document.getElementById(id).classList.remove('hidden'); }
-function hide(id) { document.getElementById(id).classList.add('hidden'); }
+function mostrar(id) { document.getElementById(id).classList.remove('hidden'); }
+function esconder(id) { document.getElementById(id).classList.add('hidden'); }
 
-function bindModal(openId, modalId, closeId) {
-  const open = document.getElementById(openId);
+function ligarModal(abrirId, modalId, fecharId) {
+  const abrir = document.getElementById(abrirId);
   const modal = document.getElementById(modalId);
-  const close = document.getElementById(closeId);
-  if (open && modal && close) {
-    open.addEventListener('click', () => show(modalId));
-    close.addEventListener('click', () => hide(modalId));
+  const fechar = document.getElementById(fecharId);
+  if (abrir && modal && fechar) {
+    abrir.addEventListener('click', () => mostrar(modalId));
+    fechar.addEventListener('click', () => esconder(modalId));
   }
 }
 
-function validateForm(form) {
+function validarFormulario(form) {
   let ok = true;
   form.querySelectorAll('input[required],select[required]').forEach(f => {
     if (!f.value.trim()) ok = false;
@@ -23,7 +23,7 @@ function validateForm(form) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  bindModal('openCreate', 'createModal', 'closeCreate');
+  ligarModal('openCreate', 'createModal', 'closeCreate');
 
   document.querySelectorAll('.edit-btn').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -32,17 +32,17 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('edit_morada').value = btn.dataset.morada;
       document.getElementById('edit_entrega').value = btn.dataset.entrega;
       document.getElementById('edit_estado').value = btn.dataset.estado;
-      show('editModal');
+      mostrar('editModal');
     });
   });
-  const closeEdit = document.getElementById('closeEdit');
-  if (closeEdit) closeEdit.addEventListener('click', () => hide('editModal'));
+  const fecharEdit = document.getElementById('closeEdit');
+  if (fecharEdit) fecharEdit.addEventListener('click', () => esconder('editModal'));
 
   ['loginForm','indexLoginForm','registoForm','createForm','editForm'].forEach(id => {
     const form = document.getElementById(id);
     if (form) {
       form.addEventListener('submit', e => {
-        if (!validateForm(form)) e.preventDefault();
+        if (!validarFormulario(form)) e.preventDefault();
       });
     }
   });
