@@ -1,4 +1,6 @@
-<?php require_once __DIR__ . "/../scripts/login.php"; ?>
+<?php require_once __DIR__ . "/scripts/login.php";
+$error       = $error       ?? '';
+?>
 <!DOCTYPE html>
 <html lang="pt">
 <head>
@@ -38,6 +40,6 @@
       <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Entrar</button>
     </form>
   </main>
-  <script src="../scripts/validate.js"></script>
+  <script src="scripts/validate.js"></script>
 </body>
 </html>
