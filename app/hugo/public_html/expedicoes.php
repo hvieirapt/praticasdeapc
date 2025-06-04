@@ -57,12 +57,12 @@
     <table class="min-w-full divide-y divide-gray-200 mt-4 table-auto">
         <thead class="bg-gray-50">
           <tr>
-            <th class="px-4 py-2">Ações</th>
-            <th class="px-4 py-2">Data de Criação</th>
-            <th class="px-4 py-2">Data de Entrega</th>
-            <th class="px-4 py-2">Cliente</th>
-            <th class="px-4 py-2">Morada</th>
-            <th class="px-4 py-2">Estado</th>
+            <th class="px-4 py-2 text-center">Ações</th>
+            <th class="px-4 py-2 text-center">Data de Criação</th>
+            <th class="px-4 py-2 text-center">Data de Entrega</th>
+            <th class="px-4 py-2 text-center">Cliente</th>
+            <th class="px-4 py-2 text-center">Morada</th>
+            <th class="px-4 py-2 text-center">Estado</th>
           </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
@@ -123,6 +123,6 @@
       </div>
     </div>
   </main>
-<script src="../scripts/validate.js"></script>
+<script src="scripts/validate.js"></script>
 </body>
 </html>
