@@ -8,7 +8,6 @@ function showAlert(msg) {
 // Aplica ou remove destaque visual no campo
 function highlightField(field, error) {
   if (error) {
-
     field.classList.remove('border-gray-300');
     field.classList.add('border-red-500');
   } else {
@@ -16,7 +15,6 @@ function highlightField(field, error) {
     if (!field.classList.contains('border-gray-300')) {
       field.classList.add('border-gray-300');
     }
-
   }
 }
 
@@ -128,7 +126,7 @@ function initModals() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+function initForms() {
   initModals();
 
   const loginForm = document.getElementById('loginForm');
@@ -165,4 +163,10 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!validateExpedicao(editForm)) e.preventDefault();
     });
   }
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initForms);
+} else {
+  initForms();
+}
