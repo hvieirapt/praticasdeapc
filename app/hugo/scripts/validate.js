@@ -8,9 +8,15 @@ function showAlert(msg) {
 // Aplica ou remove destaque visual no campo
 function highlightField(field, error) {
   if (error) {
+
+    field.classList.remove('border-gray-300');
     field.classList.add('border-red-500');
   } else {
     field.classList.remove('border-red-500');
+    if (!field.classList.contains('border-gray-300')) {
+      field.classList.add('border-gray-300');
+    }
+
   }
 }
 
