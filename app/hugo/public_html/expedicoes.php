@@ -123,6 +123,6 @@
       </div>
     </div>
   </main>
-<script src="scripts/validate.js"></script>
+<script src="../scripts/validate.js"></script>
 </body>
 </html>
