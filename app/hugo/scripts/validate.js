@@ -22,7 +22,7 @@ function validarFormulario(form) {
   return ok;
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+function inicializar() {
   ligarModal('openCreate', 'createModal', 'closeCreate');
 
   document.querySelectorAll('.edit-btn').forEach(btn => {
@@ -46,4 +46,10 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
   });
-});
+}
+
+if (document.readyState !== 'loading') {
+  inicializar();
+} else {
+  document.addEventListener('DOMContentLoaded', inicializar);
+}
