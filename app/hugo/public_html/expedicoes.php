@@ -28,7 +28,6 @@
       <button id="openCreate" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Criar Expedição</button>
       <h1 class="text-2xl font-semibold">Tabela de Expedições</h1>
     </div>
-
     <div id="createModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
       <div class="bg-white p-6 rounded w-full max-w-md">
         <h2 class="text-lg font-semibold mb-4">Nova Expedição</h2>
@@ -87,6 +86,7 @@
         </tbody>
       </table>
 
+
     <div id="editModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
       <div class="bg-white p-6 rounded w-full max-w-md">
         <h2 class="text-lg font-semibold mb-4">Editar Expedição</h2>
@@ -124,25 +124,6 @@
       </div>
     </div>
   </main>
-
-  <script>
-    const createModal = document.getElementById('createModal');
-    document.getElementById('openCreate').addEventListener('click', () => createModal.classList.remove('hidden'));
-    document.getElementById('closeCreate').addEventListener('click', () => createModal.classList.add('hidden'));
-
-    const editModal = document.getElementById('editModal');
-    document.querySelectorAll('.edit-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.getElementById('edit_id').value = btn.dataset.id;
-        document.getElementById('edit_cliente').value = btn.dataset.cliente;
-        document.getElementById('edit_morada').value = btn.dataset.morada;
-        document.getElementById('edit_entrega').value = btn.dataset.entrega;
-        document.getElementById('edit_estado').value = btn.dataset.estado;
-
-        editModal.classList.remove('hidden');
-      });
-    });
-    document.getElementById('closeEdit').addEventListener('click', () => editModal.classList.add('hidden'));
-  </script>
+<script src="../scripts/validate.js"></script>
 </body>
 </html>

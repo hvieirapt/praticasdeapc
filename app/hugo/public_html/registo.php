@@ -27,7 +27,7 @@
       <p class="highlight"><?= htmlspecialchars($error, ENT_QUOTES) ?></p>
     <?php endif; ?>
 
-    <form method="post" action="registo.php" class="space-y-4 max-w-sm mx-auto mt-4">
+    <form method="post" action="registo.php" id="registoForm" class="space-y-4 max-w-sm mx-auto mt-4">
       <div class="form-group flex flex-col">
         <label for="username" class="mb-1">Utilizador:</label>
         <input type="text" id="username" name="username" required class="border rounded p-2" />
@@ -38,6 +38,7 @@
       </div>
       <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Registar</button>
     </form>
-  </main>
+</main>
+<script src="../scripts/validate.js"></script>
 </body>
 </html>
