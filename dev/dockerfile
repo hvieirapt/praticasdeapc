@@ -7,32 +7,16 @@ RUN apt-get update \
  && a2enmod cgi rewrite \
  && rm -rf /var/lib/apt/lists/*
 
-# Configurar CGI para /scripts e /*/cgi-bin
+# Configurar CGI para /scripts
 RUN printf '\
 <Directory /var/www/html/scripts>\n\
   Options +ExecCGI\n\
-  SetHandler cgi-script\n\
-</Directory>\n\
-<Directory /var/www/html/*/cgi-bin>\n\
-  Options +ExecCGI\n\
-  SetHandler cgi-script\n\
+  <FilesMatch "\\.php$">\n\
+    SetHandler cgi-script\n\
+  </FilesMatch>\n\
 </Directory>\n' \
   > /etc/apache2/conf-available/cgi-multi.conf \
  && a2enconf cgi-multi.conf
-
-# Criar aliases para ocultar 'public_html' da URL
-RUN printf '\
-Alias /hugo/ /var/www/html/hugo/public_html/\n\
-Alias /sergio/ /var/www/html/sergio/public_html/\n\
-Alias /guilherme/ /var/www/html/guilherme/public_html/\n\
-\n\
-<Directory /var/www/html/*/public_html>\n\
-  Options Indexes FollowSymLinks\n\
-  AllowOverride All\n\
-  Require all granted\n\
-</Directory>\n' \
-  > /etc/apache2/conf-available/userdir-alias.conf \
- && a2enconf userdir-alias.conf
 
 WORKDIR /var/www/html
 EXPOSE 80

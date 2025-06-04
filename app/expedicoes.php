@@ -1,4 +1,9 @@
-<?php require_once __DIR__ . "/../scripts/expedicoes.php"; ?>
+<?php
+require_once __DIR__ . "/scripts/expedicoes.php";
+$error       = $error       ?? '';
+$expedicoes  = $expedicoes  ?? [];
+$estados     = $estados     ?? [];
+?>
 <!DOCTYPE html>
 <html lang="pt">
 <head>
