@@ -72,7 +72,7 @@
             <?php foreach ($expedicoes as $exp): ?>
               <tr>
                 <td class="px-4 py-2 text-center">
-                  <button type="button" class="edit-btn text-blue-600 underline" data-id="<?= $exp['id'] ?>" data-cliente="<?= htmlspecialchars($exp['cliente'], ENT_QUOTES) ?>" data-morada="<?= htmlspecialchars($exp['morada'], ENT_QUOTES) ?>" data-entrega="<?= htmlspecialchars($exp['data_entrega'], ENT_QUOTES) ?>">
+                  <button type="button" class="edit-btn text-blue-600 underline" data-id="<?= $exp['id'] ?>" data-cliente="<?= htmlspecialchars($exp['cliente'], ENT_QUOTES) ?>" data-morada="<?= htmlspecialchars($exp['morada'], ENT_QUOTES) ?>" data-entrega="<?= htmlspecialchars($exp['data_entrega'], ENT_QUOTES) ?>" data-estado="<?= htmlspecialchars($exp['estado'], ENT_QUOTES) ?>">
                     Editar
                   </button>
                 </td>
@@ -104,6 +104,16 @@
             <label for="edit_entrega" class="mb-1">Data de Entrega:</label>
             <input type="date" id="edit_entrega" name="data_entrega" required class="border rounded p-2" />
           </div>
+          <div class="flex flex-col">
+            <label for="edit_estado" class="mb-1">Estado:</label>
+            <select id="edit_estado" name="estado" class="border rounded p-2">
+              <?php foreach ($estados as $op): ?>
+                <option value="<?= htmlspecialchars($op, ENT_QUOTES) ?>">
+                  <?= htmlspecialchars($op) ?>
+                </option>
+              <?php endforeach; ?>
+            </select>
+          </div>
           <div class="flex justify-between gap-2 pt-2">
             <button type="submit" name="action" value="atualizar" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Guardar</button>
             <button type="submit" name="action" value="aprovar" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">Aprovar</button>
@@ -127,6 +137,8 @@
         document.getElementById('edit_cliente').value = btn.dataset.cliente;
         document.getElementById('edit_morada').value = btn.dataset.morada;
         document.getElementById('edit_entrega').value = btn.dataset.entrega;
+        document.getElementById('edit_estado').value = btn.dataset.estado;
+
         editModal.classList.remove('hidden');
       });
     });

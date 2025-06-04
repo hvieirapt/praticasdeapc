@@ -36,6 +36,13 @@ try {
     die("Erro na conexão com a base de dados ({$dbPath}): " . $e->getMessage());
 }
 
+$estados = [
+    'pendente aprovação',
+    'em processamento',
+    'concluída',
+    'cancelada'
+];
+
 // --- Tratamento de pedidos POST ---
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -69,14 +76,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $cliente      = trim((string)($_POST['cliente'] ?? ''));
         $morada       = trim((string)($_POST['morada'] ?? ''));
         $data_entrega = trim((string)($_POST['data_entrega'] ?? ''));
-        if ($id && $cliente !== '' && $morada !== '' && $data_entrega !== '') {
+        $estado       = trim((string)($_POST['estado'] ?? ''));
+        if ($id && $cliente !== '' && $morada !== '' && $data_entrega !== '' && $estado !== '') {
             $stmt = $db->prepare(
-                'UPDATE expedicoes SET cliente = :cliente, morada = :morada, data_entrega = :entrega WHERE id = :id'
+                'UPDATE expedicoes SET cliente = :cliente, morada = :morada, data_entrega = :entrega, estado = :estado WHERE id = :id'
             );
             $stmt->execute([
                 ':cliente' => $cliente,
                 ':morada'  => $morada,
                 ':entrega' => $data_entrega,
+                ':estado'  => $estado,
                 ':id'      => $id,
             ]);
         }
