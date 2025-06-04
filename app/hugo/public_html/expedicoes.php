@@ -53,7 +53,7 @@
         </form>
       </div>
     </div>
-
+    
     <table class="min-w-full divide-y divide-gray-200 mt-4 table-auto">
         <thead class="bg-gray-50">
           <tr>
