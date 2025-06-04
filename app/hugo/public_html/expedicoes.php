@@ -20,15 +20,16 @@
   </header>
 
   <main class="p-4">
-    <h1 class="text-2xl font-semibold mb-4">Tabela de Expedições</h1>
-
     <?php if (!empty($error)): ?>
       <p class="text-red-600 mb-4"><?= htmlspecialchars($error, ENT_QUOTES) ?></p>
     <?php endif; ?>
 
-    <button id="openModal" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 mb-4">Criar Expedição</button>
+    <div class="flex items-center justify-between mb-4">
+      <button id="openCreate" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Criar Expedição</button>
+      <h1 class="text-2xl font-semibold">Tabela de Expedições</h1>
+    </div>
 
-    <div id="expModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+    <div id="createModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
       <div class="bg-white p-6 rounded w-full max-w-md">
         <h2 class="text-lg font-semibold mb-4">Nova Expedição</h2>
         <form method="post" action="expedicoes.php" class="space-y-4" id="createForm">
@@ -46,19 +47,17 @@
             <input type="date" id="data_entrega" name="data_entrega" required class="border rounded p-2" />
           </div>
           <div class="flex justify-end gap-2">
-            <button type="button" id="closeModal" class="px-4 py-2 bg-gray-300 rounded">Cancelar</button>
+            <button type="button" id="closeCreate" class="px-4 py-2 bg-gray-300 rounded">Cancelar</button>
             <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Criar</button>
           </div>
         </form>
       </div>
     </div>
 
-    <form method="post" action="expedicoes.php" id="approveForm">
-      <input type="hidden" name="action" value="aprovar">
-      <table class="min-w-full divide-y divide-gray-200 mt-4 table-auto">
+    <table class="min-w-full divide-y divide-gray-200 mt-4 table-auto">
         <thead class="bg-gray-50">
           <tr>
-            <th class="px-4 py-2">Selecionar</th>
+            <th class="px-4 py-2">Ações</th>
             <th class="px-4 py-2">Data de Criação</th>
             <th class="px-4 py-2">Data de Entrega</th>
             <th class="px-4 py-2">Cliente</th>
@@ -72,7 +71,11 @@
           <?php else: ?>
             <?php foreach ($expedicoes as $exp): ?>
               <tr>
-                <td class="px-4 py-2 text-center"><input type="checkbox" name="aprovar_ids[]" value="<?= $exp['id'] ?>" class="row-checkbox" /></td>
+                <td class="px-4 py-2 text-center">
+                  <button type="button" class="edit-btn text-blue-600 underline" data-id="<?= $exp['id'] ?>" data-cliente="<?= htmlspecialchars($exp['cliente'], ENT_QUOTES) ?>" data-morada="<?= htmlspecialchars($exp['morada'], ENT_QUOTES) ?>" data-entrega="<?= htmlspecialchars($exp['data_entrega'], ENT_QUOTES) ?>">
+                    Editar
+                  </button>
+                </td>
                 <td class="px-4 py-2"><?= htmlspecialchars($exp['data_criacao'], ENT_QUOTES) ?></td>
                 <td class="px-4 py-2"><?= htmlspecialchars($exp['data_entrega'], ENT_QUOTES) ?></td>
                 <td class="px-4 py-2"><?= htmlspecialchars($exp['cliente'], ENT_QUOTES) ?></td>
@@ -83,20 +86,51 @@
           <?php endif; ?>
         </tbody>
       </table>
-      <button type="submit" id="approveBtn" class="mt-4 px-4 py-2 bg-green-500 text-white rounded disabled:opacity-50" disabled>Aprovar</button>
-    </form>
+
+    <div id="editModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+      <div class="bg-white p-6 rounded w-full max-w-md">
+        <h2 class="text-lg font-semibold mb-4">Editar Expedição</h2>
+        <form method="post" action="expedicoes.php" class="space-y-4" id="editForm">
+          <input type="hidden" name="id" id="edit_id">
+          <div class="flex flex-col">
+            <label for="edit_cliente" class="mb-1">Cliente:</label>
+            <input type="text" id="edit_cliente" name="cliente" required class="border rounded p-2" />
+          </div>
+          <div class="flex flex-col">
+            <label for="edit_morada" class="mb-1">Morada:</label>
+            <input type="text" id="edit_morada" name="morada" required class="border rounded p-2" />
+          </div>
+          <div class="flex flex-col">
+            <label for="edit_entrega" class="mb-1">Data de Entrega:</label>
+            <input type="date" id="edit_entrega" name="data_entrega" required class="border rounded p-2" />
+          </div>
+          <div class="flex justify-between gap-2 pt-2">
+            <button type="submit" name="action" value="atualizar" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Guardar</button>
+            <button type="submit" name="action" value="aprovar" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">Aprovar</button>
+            <button type="submit" name="action" value="apagar" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">Apagar</button>
+            <button type="button" id="closeEdit" class="px-4 py-2 bg-gray-300 rounded">Cancelar</button>
+          </div>
+        </form>
+      </div>
+    </div>
   </main>
 
   <script>
-    const modal = document.getElementById('expModal');
-    document.getElementById('openModal').addEventListener('click', () => modal.classList.remove('hidden'));
-    document.getElementById('closeModal').addEventListener('click', () => modal.classList.add('hidden'));
+    const createModal = document.getElementById('createModal');
+    document.getElementById('openCreate').addEventListener('click', () => createModal.classList.remove('hidden'));
+    document.getElementById('closeCreate').addEventListener('click', () => createModal.classList.add('hidden'));
 
-    const checkboxes = document.querySelectorAll('.row-checkbox');
-    const approveBtn = document.getElementById('approveBtn');
-    checkboxes.forEach(cb => cb.addEventListener('change', () => {
-      approveBtn.disabled = document.querySelectorAll('.row-checkbox:checked').length === 0;
-    }));
+    const editModal = document.getElementById('editModal');
+    document.querySelectorAll('.edit-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.getElementById('edit_id').value = btn.dataset.id;
+        document.getElementById('edit_cliente').value = btn.dataset.cliente;
+        document.getElementById('edit_morada').value = btn.dataset.morada;
+        document.getElementById('edit_entrega').value = btn.dataset.entrega;
+        editModal.classList.remove('hidden');
+      });
+    });
+    document.getElementById('closeEdit').addEventListener('click', () => editModal.classList.add('hidden'));
   </script>
 </body>
 </html>
