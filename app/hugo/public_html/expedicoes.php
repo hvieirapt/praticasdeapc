@@ -138,6 +138,7 @@
         document.getElementById('edit_morada').value = btn.dataset.morada;
         document.getElementById('edit_entrega').value = btn.dataset.entrega;
         document.getElementById('edit_estado').value = btn.dataset.estado;
+
         editModal.classList.remove('hidden');
       });
     });
