@@ -64,12 +64,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header('Location: expedicoes.php');
             exit;
         }
+    } elseif ($action === 'atualizar') {
+        $id          = (int)($_POST['id'] ?? 0);
+        $cliente      = trim((string)($_POST['cliente'] ?? ''));
+        $morada       = trim((string)($_POST['morada'] ?? ''));
+        $data_entrega = trim((string)($_POST['data_entrega'] ?? ''));
+        if ($id && $cliente !== '' && $morada !== '' && $data_entrega !== '') {
+            $stmt = $db->prepare(
+                'UPDATE expedicoes SET cliente = :cliente, morada = :morada, data_entrega = :entrega WHERE id = :id'
+            );
+            $stmt->execute([
+                ':cliente' => $cliente,
+                ':morada'  => $morada,
+                ':entrega' => $data_entrega,
+                ':id'      => $id,
+            ]);
+        }
+        header('Location: expedicoes.php');
+        exit;
     } elseif ($action === 'aprovar') {
-        $ids = array_map('intval', $_POST['aprovar_ids'] ?? []);
-        if ($ids) {
-            $placeholders = implode(',', array_fill(0, count($ids), '?'));
-            $stmt = $db->prepare("UPDATE expedicoes SET estado = 'em processamento' WHERE id IN ($placeholders)");
-            $stmt->execute($ids);
+        $id = (int)($_POST['id'] ?? 0);
+        if ($id) {
+            $stmt = $db->prepare("UPDATE expedicoes SET estado = 'em processamento' WHERE id = :id");
+            $stmt->execute([':id' => $id]);
+        }
+        header('Location: expedicoes.php');
+        exit;
+    } elseif ($action === 'apagar') {
+        $id = (int)($_POST['id'] ?? 0);
+        if ($id) {
+            $stmt = $db->prepare('DELETE FROM expedicoes WHERE id = :id');
+            $stmt->execute([':id' => $id]);
         }
         header('Location: expedicoes.php');
         exit;
