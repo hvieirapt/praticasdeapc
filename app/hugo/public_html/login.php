@@ -26,7 +26,7 @@
       <p class="highlight"><?= htmlspecialchars($error, ENT_QUOTES) ?></p>
     <?php endif; ?>
 
-    <form method="post" action="login.php" id="loginForm" class="space-y-4 max-w-sm mx-auto mt-4">
+    <form method="post" action="login.php" id="loginForm" class="space-y-4 max-w-sm mx-auto mt-4" novalidate>
       <div class="form-group flex flex-col">
         <label for="username" class="mb-1">Utilizador:</label>
         <input type="text" id="username" name="username" required class="border border-gray-300 rounded p-2" />

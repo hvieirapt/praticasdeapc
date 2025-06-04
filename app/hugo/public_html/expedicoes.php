@@ -32,7 +32,7 @@
     <div id="createModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
       <div class="bg-white p-6 rounded w-full max-w-md">
         <h2 class="text-lg font-semibold mb-4">Nova Expedição</h2>
-        <form method="post" action="expedicoes.php" class="space-y-4" id="createForm">
+        <form method="post" action="expedicoes.php" class="space-y-4" id="createForm" novalidate>
           <input type="hidden" name="action" value="criar">
           <div class="flex flex-col">
             <label for="cliente" class="mb-1">Cliente:</label>
@@ -91,7 +91,7 @@
     <div id="editModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
       <div class="bg-white p-6 rounded w-full max-w-md">
         <h2 class="text-lg font-semibold mb-4">Editar Expedição</h2>
-        <form method="post" action="expedicoes.php" class="space-y-4" id="editForm">
+        <form method="post" action="expedicoes.php" class="space-y-4" id="editForm" novalidate>
           <input type="hidden" name="id" id="edit_id">
           <div class="flex flex-col">
             <label for="edit_cliente" class="mb-1">Cliente:</label>
