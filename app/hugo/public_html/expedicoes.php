@@ -5,15 +5,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="style/styles.css" />
   <title>Expedições</title>
 </head>
-<body>
-  <header>
+<body class="bg-gray-100">
+  <!-- Navegação principal -->
+  <header class="bg-green-600 text-white p-4">
     <nav>
-      <ul class="main-nav">
+      <ul class="flex justify-center space-x-4 font-semibold">
         <li><a href="inventario.php">Inventário</a></li>
-        <li><a href="expedicoes.php" class="current">Expedições</a></li>
+        <li><a href="expedicoes.php" class="underline">Expedições</a></li>
         <li><a href="dashboard.php">Dashboard</a></li>
       </ul>
     </nav>

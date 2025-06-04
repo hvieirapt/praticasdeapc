@@ -1,4 +1,5 @@
 <?php
+// Script de gestão de expedições
 declare(strict_types=1);
 
 // --- Configuração do SQLite e migrations ---

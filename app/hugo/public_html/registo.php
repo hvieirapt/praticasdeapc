@@ -5,40 +5,40 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="style/styles.css" />
   <title>Registo</title>
 </head>
-<body>
-  <header>
+<body class="bg-gray-100">
+  <!-- Navegação principal -->
+  <header class="bg-green-600 text-white p-4">
     <nav>
-      <ul class="main-nav">
+      <ul class="flex justify-center space-x-4 font-semibold">
         <li><a href="login.php">Login</a></li>
-        <li><a href="registo.php" class="current">Registo</a></li>
+        <li><a href="registo.php" class="underline">Registo</a></li>
         <li><a href="expedicoes.php">Expedições</a></li>
         <li><a href="dashboard.php">Dashboard</a></li>
       </ul>
     </nav>
   </header>
 
-  <main>
-    <h1 class="page-title">Criar Nova Conta</h1>
+  <main class="p-4">
+    <h1 class="text-2xl font-semibold mb-4 text-center">Criar Nova Conta</h1>
 
     <?php if ($error): ?>
-      <p class="highlight"><?= htmlspecialchars($error, ENT_QUOTES) ?></p>
+      <p class="text-red-600 mb-4"><?= htmlspecialchars($error, ENT_QUOTES) ?></p>
     <?php endif; ?>
 
     <form method="post" action="registo.php" id="registoForm" class="space-y-4 max-w-sm mx-auto mt-4" novalidate>
-      <div class="form-group flex flex-col">
+      <div class="flex flex-col">
         <label for="username" class="mb-1">Utilizador:</label>
         <input type="text" id="username" name="username" required class="border border-gray-300 rounded p-2" />
       </div>
-      <div class="form-group flex flex-col">
+      <div class="flex flex-col">
         <label for="password" class="mb-1">Palavra-passe:</label>
         <input type="password" id="password" name="password" required class="border border-gray-300 rounded p-2" />
       </div>
       <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Registar</button>
     </form>
-</main>
-<script src="../scripts/validate.js"></script>
+  </main>
+  <script src="../scripts/validate.js"></script>
 </body>
 </html>

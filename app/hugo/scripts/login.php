@@ -1,5 +1,5 @@
 <?php
-// login.php
+// Script de processamento de login
 declare(strict_types=1);
 session_start();
 
