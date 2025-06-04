@@ -36,27 +36,41 @@ try {
     die("Erro na conexão com a base de dados ({$dbPath}): " . $e->getMessage());
 }
 
-// --- Inserção de nova expedição via POST ---
+// --- Tratamento de pedidos POST ---
+$error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $cliente      = trim((string)($_POST['cliente'] ?? ''));
-    $morada       = trim((string)($_POST['morada'] ?? ''));
-    $data_entrega = trim((string)($_POST['data_entrega'] ?? ''));
+    $action = $_POST['action'] ?? '';
 
-    if ($cliente === '' || $morada === '' || $data_entrega === '') {
-        $error = "Por favor, preencha todos os campos.";
-    } else {
-        $stmt = $db->prepare(
-            "INSERT INTO expedicoes
-             (data_criacao, data_entrega, cliente, morada, estado)
-             VALUES (:data_criacao, :data_entrega, :cliente, :morada, :estado)"
-        );
-        $stmt->execute([
-            ':data_criacao' => date('Y-m-d'),
-            ':data_entrega' => $data_entrega,
-            ':cliente'      => $cliente,
-            ':morada'       => $morada,
-            ':estado'       => 'em processamento',
-        ]);
+    if ($action === 'criar') {
+        $cliente      = trim((string)($_POST['cliente'] ?? ''));
+        $morada       = trim((string)($_POST['morada'] ?? ''));
+        $data_entrega = trim((string)($_POST['data_entrega'] ?? ''));
+
+        if ($cliente === '' || $morada === '' || $data_entrega === '') {
+            $error = "Por favor, preencha todos os campos.";
+        } else {
+            $stmt = $db->prepare(
+                "INSERT INTO expedicoes
+                 (data_criacao, data_entrega, cliente, morada, estado)
+                 VALUES (:data_criacao, :data_entrega, :cliente, :morada, :estado)"
+            );
+            $stmt->execute([
+                ':data_criacao' => date('Y-m-d'),
+                ':data_entrega' => $data_entrega,
+                ':cliente'      => $cliente,
+                ':morada'       => $morada,
+                ':estado'       => 'pendente aprovação',
+            ]);
+            header('Location: expedicoes.php');
+            exit;
+        }
+    } elseif ($action === 'aprovar') {
+        $ids = array_map('intval', $_POST['aprovar_ids'] ?? []);
+        if ($ids) {
+            $placeholders = implode(',', array_fill(0, count($ids), '?'));
+            $stmt = $db->prepare("UPDATE expedicoes SET estado = 'em processamento' WHERE id IN ($placeholders)");
+            $stmt->execute($ids);
+        }
         header('Location: expedicoes.php');
         exit;
     }
