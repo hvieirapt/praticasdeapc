@@ -1,60 +1,10 @@
-<?php
-// login.php
-declare(strict_types=1);
-session_start();
-
-// --- 1) Configuração da ligação SQLite ---
-$dbPath = '/var/www/html/data/database.sqlite';
-try {
-    $db = new PDO('sqlite:' . $dbPath);
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("Erro BD: " . $e->getMessage());
-}
-
-// --- 2) Processa form de login ---
-$error = '';
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = trim((string)($_POST['username'] ?? ''));
-    $password = trim((string)($_POST['password'] ?? ''));
-
-    if ($username === '' || $password === '') {
-        $error = 'Preencha utilizador e palavra-passe.';
-    } else {
-        $stmt = $db->prepare(
-            'SELECT id, password FROM User WHERE username = :username'
-        );
-        $stmt->execute([':username' => $username]);
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        // compara password em texto (para produção use password_verify)
-        if ($user && $password === $user['password']) {
-            // atualiza ultimo_login
-            $stmt2 = $db->prepare(
-                'UPDATE User
-                 SET ultimo_login = :ts
-                 WHERE id = :id'
-            );
-            $stmt2->execute([
-                ':ts' => date('Y-m-d H:i:s'),
-                ':id' => $user['id'],
-            ]);
-
-            // guarda sessão e redireciona para expedicoes.php
-            $_SESSION['user_id'] = $user['id'];
-            header('Location: expedicoes.php');
-            exit;
-        } else {
-            $error = 'Credenciais inválidas.';
-        }
-    }
-}
-?>
+<?php require_once __DIR__ . "/../scripts/login.php"; ?>
 <!DOCTYPE html>
 <html lang="pt">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="style/styles.css">
   <title>Login</title>
 </head>
@@ -76,17 +26,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <p class="highlight"><?= htmlspecialchars($error, ENT_QUOTES) ?></p>
     <?php endif; ?>
 
-    <form method="post" action="login.php" class="login-form">
-      <div class="form-group">
-        <label for="username">Utilizador:</label><br>
-        <input type="text" id="username" name="username" required>
+    <form method="post" action="login.php" id="loginForm" class="space-y-4 max-w-sm mx-auto mt-4" novalidate>
+      <div class="form-group flex flex-col">
+        <label for="username" class="mb-1">Utilizador:</label>
+        <input type="text" id="username" name="username" required class="border border-gray-300 rounded p-2" />
       </div>
-      <div class="form-group">
-        <label for="password">Palavra-passe:</label><br>
-        <input type="password" id="password" name="password" required>
+      <div class="form-group flex flex-col">
+        <label for="password" class="mb-1">Palavra-passe:</label>
+        <input type="password" id="password" name="password" required class="border border-gray-300 rounded p-2" />
       </div>
-      <button type="submit">Entrar</button>
+      <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Entrar</button>
     </form>
-  </main>
+</main>
+<script src="../scripts/validate.js"></script>
 </body>
 </html>
