@@ -28,7 +28,6 @@
       <button id="openCreate" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Criar Expedição</button>
       <h1 class="text-2xl font-semibold">Tabela de Expedições</h1>
     </div>
-
     <div id="createModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
       <div class="bg-white p-6 rounded w-full max-w-md">
         <h2 class="text-lg font-semibold mb-4">Nova Expedição</h2>
@@ -86,6 +85,7 @@
           <?php endif; ?>
         </tbody>
       </table>
+
 
     <div id="editModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
       <div class="bg-white p-6 rounded w-full max-w-md">
