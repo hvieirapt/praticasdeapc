@@ -22,8 +22,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'Preencha utilizador e palavra-passe.';
     } else {
         $stmt = $db->prepare(
-            'SELECT id, password FROM User WHERE username = :username'
-        );
+                'SELECT id, password, grupo_permissoes FROM User WHERE username = :username'
+            );
         $stmt->execute([':username' => $username]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -40,9 +40,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':id' => $user['id'],
             ]);
 
-            // guarda sessão e redireciona para expedicoes.php
+            // guarda sessão e redireciona conforme permissões
             $_SESSION['user_id'] = $user['id'];
-            header('Location: expedicoes.php');
+            $_SESSION['username'] = $username;
+            $_SESSION['grupo_permissoes'] = $user['grupo_permissoes'];
+            if (in_array($user['grupo_permissoes'], ['Administrador', 'Operador'], true)) {
+                header('Location: dashboard.php');
+            } else {
+                header('Location: dashboard_cliente.php');
+            }
             exit;
         } else {
             $error = 'Credenciais inválidas.';

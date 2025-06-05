@@ -1,4 +1,14 @@
 <?php
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php');
+    exit();
+}
+$grupo = $_SESSION['grupo_permissoes'] ?? '';
+if (!in_array($grupo, ['Administrador', 'Operador'], true)) {
+    header('Location: 403.php');
+    exit();
+}
 require_once __DIR__ . "/scripts/expedicoes.php";
 $error       = $error       ?? '';
 $expedicoes  = $expedicoes  ?? [];
@@ -12,19 +22,11 @@ $estados     = $estados     ?? [];
   <script src="https://cdn.tailwindcss.com"></script>
   <title>Expedições</title>
 </head>
-<body class="bg-gray-100">
-  <!-- Navegação principal -->
-  <header class="bg-green-600 text-white p-4">
-    <nav>
-      <ul class="flex justify-center space-x-4 font-semibold">
-        <li><a href="inventario.php">Inventário</a></li>
-        <li><a href="expedicoes.php" class="underline">Expedições</a></li>
-        <li><a href="dashboard.php">Dashboard</a></li>
-      </ul>
-    </nav>
-  </header>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+  <?php include __DIR__ . '/components/navbar.php'; ?>
 
-  <main class="p-4">
+
+  <main class="p-4 flex-grow">
     <?php if (!empty($error)): ?>
       <p class="text-red-600 mb-4"><?= htmlspecialchars($error, ENT_QUOTES) ?></p>
     <?php endif; ?>
@@ -63,6 +65,7 @@ $estados     = $estados     ?? [];
         <thead class="bg-gray-50">
           <tr>
             <th class="px-4 py-2 text-center">Ações</th>
+            <th class="px-4 py-2 text-center">ID</th>
             <th class="px-4 py-2 text-center">Data de Criação</th>
             <th class="px-4 py-2 text-center">Data de Entrega</th>
             <th class="px-4 py-2 text-center">Cliente</th>
@@ -72,7 +75,7 @@ $estados     = $estados     ?? [];
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
           <?php if (empty($expedicoes)): ?>
-            <tr><td colspan="6" class="px-4 py-2 text-center">Não há expedições registadas.</td></tr>
+            <tr><td colspan="7" class="px-4 py-2 text-center">Não há expedições registadas.</td></tr>
           <?php else: ?>
             <?php foreach ($expedicoes as $exp): ?>
               <tr>
@@ -81,6 +84,7 @@ $estados     = $estados     ?? [];
                     Editar
                   </button>
                 </td>
+                <td class="px-4 py-2 text-center"><?= htmlspecialchars($exp['id'], ENT_QUOTES) ?></td>
                 <td class="px-4 py-2 text-center"><?= htmlspecialchars($exp['data_criacao'], ENT_QUOTES) ?></td>
                 <td class="px-4 py-2 text-center"><?= htmlspecialchars($exp['data_entrega'], ENT_QUOTES) ?></td>
                 <td class="px-4 py-2 text-center"><?= htmlspecialchars($exp['cliente'], ENT_QUOTES) ?></td>
@@ -128,6 +132,7 @@ $estados     = $estados     ?? [];
       </div>
     </div>
   </main>
+  <?php include __DIR__ . '/components/footer.php'; ?>
 <script src="scripts/validate.js"></script>
 </body>
 </html>

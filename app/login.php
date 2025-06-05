@@ -9,17 +9,8 @@ $error       = $error       ?? '';
   <script src="https://cdn.tailwindcss.com"></script>
   <title>Login</title>
 </head>
-<body class="bg-gray-100">
-  <!-- Navegação principal -->
-  <header class="bg-green-600 text-white p-4">
-    <nav>
-      <ul class="flex justify-center space-x-4 font-semibold">
-        <li><a href="login.php" class="underline">Login</a></li>
-        <li><a href="expedicoes.php">Expedições</a></li>
-        <li><a href="dashboard.php">Dashboard</a></li>
-      </ul>
-    </nav>
-  </header>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+
 
   <main class="p-4">
     <h1 class="text-2xl font-semibold mb-4 text-center">Iniciar Sessão</h1>
@@ -40,6 +31,7 @@ $error       = $error       ?? '';
       <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Entrar</button>
     </form>
   </main>
+  <?php include __DIR__ . '/components/footer.php'; ?>
   <script src="scripts/validate.js"></script>
 </body>
 </html>

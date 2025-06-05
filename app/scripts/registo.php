@@ -1,9 +1,7 @@
 <?php
-// Script de registo de novo utilizador
 declare(strict_types=1);
-session_start();
 
-// --- 1) Conexão SQLite ---
+// Conexão SQLite
 $dbPath = '/var/www/html/data/database.sqlite';
 try {
     $db = new PDO('sqlite:' . $dbPath);
@@ -12,14 +10,21 @@ try {
     die("Erro na conexão com a base de dados: " . $e->getMessage());
 }
 
-// --- 2) Processa form de registo ---
+// Inicialização de variáveis
 $error = '';
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = trim((string)($_POST['username'] ?? ''));
-    $password = trim((string)($_POST['password'] ?? ''));
+$username = '';
+$password = '';
+$grupo_permissoes = '';
 
-    if ($username === '' || $password === '') {
-        $error = 'Preencha utilizador e palavra-passe.';
+// Processa form de registo
+if ($_SERVER['REQUEST_METHOD'] === 'POST' 
+    && isset($_POST['username'], $_POST['password'], $_POST['grupo_permissoes'])) {
+    $username = trim((string)$_POST['username']);
+    $password = trim((string)$_POST['password']);
+    $grupo_permissoes = trim((string)$_POST['grupo_permissoes']);
+
+    if ($username === '' || $password === '' || $grupo_permissoes === '') {
+        $error = 'Preencha todos os campos.';
     } else {
         // Verifica se já existe
         $stmt = $db->prepare('SELECT id FROM User WHERE username = :username');
@@ -27,18 +32,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($stmt->fetch()) {
             $error = 'Utilizador já existe.';
         } else {
-            // Insere novo user
+            // Insere novo utilizador
             $stmt2 = $db->prepare(
-                'INSERT INTO User (username, password) VALUES (:username, :password)'
+                'INSERT INTO User (username, password, grupo_permissoes) VALUES (:username, :password, :grupo)'
             );
             $stmt2->execute([
-                ':username' => $username,
-                ':password' => $password,
+                ':username'         => $username,
+                ':password'         => $password,
+                ':grupo'            => $grupo_permissoes,
             ]);
-            // Guarda sessão e redireciona
-            $_SESSION['user_id'] = (int)$db->lastInsertId();
-            header('Location: expedicoes.php');
+            header('Location: registo.php');
             exit;
         }
     }
 }
+
+// Listar utilizadores existentes
+try {
+    $stmtList = $db->query('SELECT id, username, grupo_permissoes FROM User');
+    $users = $stmtList->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    $users = [];
+    $error = 'Erro ao listar utilizadores: ' . $e->getMessage();
+}
+?>
