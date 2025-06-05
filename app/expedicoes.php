@@ -11,6 +11,8 @@ if (!in_array($grupo, ['Administrador', 'Operador'], true)) {
 }
 require_once __DIR__ . "/scripts/expedicoes.php";
 $error       = $error       ?? '';
+$page        = $page        ?? 1;
+$totalPages  = $totalPages  ?? 0;
 $expedicoes  = $expedicoes  ?? [];
 $estados     = $estados     ?? [];
 ?>
