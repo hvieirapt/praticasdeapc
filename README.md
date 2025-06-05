@@ -63,4 +63,4 @@ de entrega.
 `make docker-up`
 
 ### 3. Aceder atraves de browser a:
-`http://localhost:8888/login.php`
+`http://localhost:8888`
