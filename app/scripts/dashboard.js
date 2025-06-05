@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // --- Pie Chart ---
   const pieCanvas = document.getElementById('pieChart').getContext('2d');
-  const lineCanvas = document.getElementById('lineChart').getContext('2d');
-
   const pieChart = new Chart(pieCanvas, {
     type: 'pie',
     data: {
@@ -39,6 +38,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // --- Line Chart ---
+  const lineCanvas = document.getElementById('lineChart').getContext('2d');
   const lineChart = new Chart(lineCanvas, {
     type: 'line',
     data: {
@@ -74,6 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // --- Logout Button ---
   const logoutButton = document.getElementById('logoutButton');
   if (logoutButton) {
     logoutButton.addEventListener('click', event => {
@@ -82,5 +84,44 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.href = '/logout.php';
       }
     });
+  }
+
+  // --- Filtro de Encomendas ---
+  function filtrarEncomendas() {
+    const estadoSelecionado = document.getElementById('estadoFilter').value;
+    const tbody = document.querySelector("tbody");
+    tbody.innerHTML = ""; // Limpa a tabela
+
+    let filtradas = encomendas;
+    if (estadoSelecionado !== '') {
+      filtradas = encomendas.filter(e => e.estado === estadoSelecionado);
+    }
+
+    const ultimas5 = filtradas.slice(0, 5);
+
+    if (ultimas5.length === 0) {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `<td colspan="4" class="px-4 py-2 text-center text-gray-500">Nenhuma encomenda encontrada.</td>`;
+      tbody.appendChild(tr);
+    } else {
+      ultimas5.forEach(encomenda => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td class="px-4 py-2 text-center">${encomenda.id}</td>
+          <td class="px-4 py-2 text-center">${encomenda.cliente}</td>
+          <td class="px-4 py-2 text-center">${encomenda.data_criacao}</td>
+          <td class="px-4 py-2 text-center">${encomenda.estado}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+  }
+
+  filtrarEncomendas();
+
+  // Event Listener no botão
+  const filtroButton = document.querySelector('button[onclick="filtrarEncomendas()"]');
+  if (filtroButton) {
+    filtroButton.addEventListener('click', filtrarEncomendas);
   }
 });
