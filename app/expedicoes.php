@@ -36,30 +36,28 @@ $estados     = $estados     ?? [];
       <h1 class="text-2xl font-semibold">Tabela de Expedições</h1>
     </div>
 
-    <div id="createModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
-      <div class="bg-white p-6 rounded w-full max-w-md">
-        <h2 class="text-lg font-semibold mb-4">Nova Expedição</h2>
-        <form method="post" action="expedicoes.php" class="space-y-4" id="createForm" novalidate>
-          <input type="hidden" name="action" value="criar">
-          <div class="flex flex-col">
-            <label for="cliente" class="mb-1">Cliente:</label>
-            <input type="text" id="cliente" name="cliente" required class="border border-gray-300 rounded p-2" />
-          </div>
-          <div class="flex flex-col">
-            <label for="morada" class="mb-1">Morada:</label>
-            <input type="text" id="morada" name="morada" required class="border border-gray-300 rounded p-2" />
-          </div>
-          <div class="flex flex-col">
-            <label for="data_entrega" class="mb-1">Data de Entrega:</label>
-            <input type="date" id="data_entrega" name="data_entrega" required class="border border-gray-300 rounded p-2" />
-          </div>
-          <div class="flex justify-end gap-2">
-            <button type="button" id="closeCreate" class="px-4 py-2 bg-gray-300 rounded">Cancelar</button>
-            <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Criar</button>
-          </div>
-        </form>
+    <form method="get" class="mb-4 flex flex-wrap gap-4 items-end">
+      <div class="flex flex-col">
+        <label for="date_from" class="mb-1">Data de Entrega Inicial:</label>
+        <input type="date" id="date_from" name="date_from" value="<?= htmlspecialchars($_GET['date_from'] ?? '') ?>" class="border border-gray-300 rounded p-2" />
       </div>
-    </div>
+      <div class="flex flex-col">
+        <label for="date_to" class="mb-1">Data de Entrega Final:</label>
+        <input type="date" id="date_to" name="date_to" value="<?= htmlspecialchars($_GET['date_to'] ?? '') ?>" class="border border-gray-300 rounded p-2" />
+      </div>
+      <div class="flex flex-col">
+        <label for="estado" class="mb-1">Estado:</label>
+        <select id="estado" name="estado" class="border border-gray-300 rounded p-2">
+          <option value="">Todos</option>
+          <?php foreach ($estados as $op): ?>
+            <option value="<?= htmlspecialchars($op, ENT_QUOTES) ?>" <?= (($_GET['estado'] ?? '') === $op) ? 'selected' : '' ?>><?= htmlspecialchars($op) ?></option>
+          <?php endforeach; ?>
+        </select>
+      </div>
+      <div class="flex items-end">
+        <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Filtrar</button>
+      </div>
+    </form>
 
     <table class="min-w-full divide-y divide-gray-200 mt-4 table-auto">
         <thead class="bg-gray-50">
@@ -95,6 +93,16 @@ $estados     = $estados     ?? [];
           <?php endif; ?>
         </tbody>
       </table>
+      <?php if ($totalPages > 1): ?>
+      <div class="mt-4 flex items-center justify-center">
+        <label for="page_select" class="mr-2">Página:</label>
+        <select id="page_select" class="border rounded p-2" onchange="const params = new URLSearchParams(window.location.search); params.set('page', this.value); window.location.search = params;">
+          <?php for ($p = 1; $p <= $totalPages; $p++): ?>
+            <option value="<?= $p ?>" <?= ($p === $page) ? 'selected' : '' ?>><?= $p ?></option>
+          <?php endfor; ?>
+        </select>
+      </div>
+      <?php endif; ?>
     <div id="editModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
       <div class="bg-white p-6 rounded w-full max-w-md">
         <h2 class="text-lg font-semibold mb-4">Editar Expedição</h2>

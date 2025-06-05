@@ -111,6 +111,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// --- Leitura de todas as expedições ---
-$stmt = $db->query("SELECT * FROM expedicoes ORDER BY id DESC");
+// --- Filtros e Paginação ---
+$page = max(1, (int)($_GET['page'] ?? 1));
+$limit = 10;
+$offset = ($page - 1) * $limit;
+$where = [];
+$params = [];
+if (!empty($_GET['estado'])) {
+    $where[] = 'estado = :estado';
+    $params[':estado'] = $_GET['estado'];
+}
+if (!empty($_GET['date_from'])) {
+    $where[] = 'date(data_entrega) >= :date_from';
+    $params[':date_from'] = $_GET['date_from'];
+}
+if (!empty($_GET['date_to'])) {
+    $where[] = 'date(data_entrega) <= :date_to';
+    $params[':date_to'] = $_GET['date_to'];
+}
+$where_sql = $where ? 'WHERE ' . implode(' AND ', $where) : '';
+// Contar total de expedições
+$countSql = "SELECT COUNT(*) FROM expedicoes $where_sql";
+$countStmt = $db->prepare($countSql);
+foreach ($params as $key => $value) {
+    $countStmt->bindValue($key, $value);
+}
+$countStmt->execute();
+$total = (int)$countStmt->fetchColumn();
+$totalPages = (int)ceil($total / $limit);
+// Carregar expedições com filtros e paginação
+$sql = "SELECT * FROM expedicoes $where_sql ORDER BY id DESC LIMIT :limit OFFSET :offset";
+$stmt = $db->prepare($sql);
+foreach ($params as $key => $value) {
+    $stmt->bindValue($key, $value);
+}
+$stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+$stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+$stmt->execute();
 $expedicoes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// --- Disponibilizar páginas para o view ---
+$pagination = [
+    'current' => $page,
+    'total'   => $totalPages
+];
