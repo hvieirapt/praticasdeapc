@@ -5,12 +5,14 @@ if ($group === 'Administrador') {
     $menu = [
         'Dashboard'    => 'dashboard.php',
         'Expedições'   => 'expedicoes.php',
+        'Inventário'   => 'inventario.php',
         'Registo'      => 'registo.php',
     ];
 } elseif ($group === 'Operador') {
     $menu = [
         'Dashboard'  => 'dashboard.php',
         'Expedições' => 'expedicoes.php',
+        'Inventário' => 'inventario.php',
     ];
 } elseif ($group === 'Cliente') {
     $menu = [
