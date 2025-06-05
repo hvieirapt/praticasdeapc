@@ -85,7 +85,7 @@ while ($row = $res->fetchArray(SQLITE3_ASSOC)) {
         </div>
 
                 <div class="table-container">
-                    <h3>Últimas Encomendas</h3>
+                    <h2 class="text-2xl font-semibold">Últimas 5 Encomendas:</h2>
                     <table class="min-w-full divide-y divide-gray-200 mt-4 table-auto text-center">
                         <thead class="bg-gray-50">
                             <tr>

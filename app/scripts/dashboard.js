@@ -30,6 +30,10 @@ document.addEventListener('DOMContentLoaded', () => {
           display: true,
           position: 'bottom',
           labels: { boxWidth: 20, padding: 10 }
+        },
+        title: {
+          display: true,
+          text: 'Distribuição de Estados'
         }
       }
     }
@@ -55,6 +59,10 @@ document.addEventListener('DOMContentLoaded', () => {
           display: true,
           position: 'bottom',
           labels: { boxWidth: 20, padding: 10 }
+        },
+        title: {
+          display: true,
+          text: 'Entregas Últimos 30 Dias'
         }
       },
       scales: {
