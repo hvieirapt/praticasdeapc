@@ -9,12 +9,16 @@
 <body class="bg-gray-100 min-h-screen flex flex-col">
   <header class="bg-gray-800 text-gray-100">
     <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex h-16 items-center space-x-4">
-        <a href="#" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Home</a>
-        <a href="#" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Quem Somos</a>
-        <a href="#" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Contactos</a>
-        <a href="dashboard_cliente.php" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Seguir Expedições</a>
-        <a href="login.php" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Login</a>
+      <div class="flex h-16 items-center">
+        <div class="flex space-x-4">
+          <a href="#" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Home</a>
+          <a href="#" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Quem Somos</a>
+          <a href="#" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Contactos</a>
+        </div>
+        <div class="flex space-x-4 ml-auto">
+          <a href="dashboard_cliente.php" class="px-3 py-2 rounded-md text-sm font-medium bg-yellow-500 text-gray-900 hover:bg-yellow-600">Seguir Expedições</a>
+          <a href="login.php" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Login</a>
+        </div>
       </div>
     </nav>
   </header>
